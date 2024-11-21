@@ -68,7 +68,7 @@ export default class Register extends Component {
           } else if (error.code === "auth/weak-password") {
             this.setState({ errors: { password: "La contraseña debe tener al menos 6 caracteres." } });
           } else {
-            this.setState({ errors: { email: "", password: error.message } }); // Mensaje genérico
+            this.setState({ errors: { email: "", password: error.message } });
           }
         })
 
