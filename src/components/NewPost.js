@@ -16,7 +16,8 @@ export default class NewPost extends Component {
   handlePost = () => {
     db.collection('posts').add({
       email: auth.currentUser .email,
-      mensaje: this.state.message,
+      posteo: this.state.message,
+      likes: 0,
       createdAt: Date.now()
     })
     .then(() => {
