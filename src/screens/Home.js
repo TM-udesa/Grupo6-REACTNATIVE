@@ -12,7 +12,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    db.collection("posts").onSnapshot((docs) => {
+    db.collection("posts").orderBy('createdAt', 'desc').onSnapshot((docs) => {
       let posts = [];
       docs.forEach((doc) => {
         posts.push({
@@ -39,6 +39,9 @@ export default class Home extends Component {
             <View style={styles.postContainer}>
               <Text style={styles.email}>{item.data.email}</Text>
               <Text style={styles.message}>{item.data.posteo}</Text>
+              <Text style={styles.likes}>
+                Likes: {item.data.likes ? item.data.likes.length : 0}
+              </Text>
             </View>
           )}
         />
@@ -75,5 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555",
     marginTop: 5,
+  },
+  likes: {
+    fontSize: 14,
+    color: "#888",
+    marginTop: 10,
   },
 });

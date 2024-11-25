@@ -49,8 +49,22 @@ export default class Profile extends Component {
   handleLogOut() {
     auth.signOut().then(this.props.navigation.navigate("Login"));
   }
+  handleDelete(posteoId) {
+    db.collection("posts")
+      .doc(posteoId)
+      .delete()
+      .then(() => {
+      })
+      .catch((error) => {
+        console.log(error);
+
+      })
+  }
   render() {
     const { posts } = this.state;
+  
+    const sinPosteos = posts.length == 0;
+  
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Tu Perfil</Text>
@@ -62,21 +76,31 @@ export default class Profile extends Component {
           <Text style={styles.logoutText}>LogOut</Text>
         </TouchableOpacity>
         <Text style={styles.header}>Aquí están tus posteos:</Text>
-        <FlatList
-          data={posts}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.postContainer}>
-              <Text style={styles.email}>{item.data.email}</Text>
-              <Text style={styles.message}>{item.data.posteo}</Text>
-              <Text style={styles.likes}>Likes: {item.data.likes.length}</Text>
-            </View>
-          )}
-        />
+        
+        {sinPosteos ? (
+          <Text style={styles.subtitle}>Haz tu primer posteo</Text>
+        ) : (
+          <FlatList
+            data={posts}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.postContainer}>
+                <Text style={styles.email}>{item.data.email}</Text>
+                <Text style={styles.message}>{item.data.posteo}</Text>
+                <Text style={styles.likes}>
+                  Likes: {item.data.likes ? item.data.likes.length : 0}
+                </Text>
+                <TouchableOpacity onPress={() => this.handleDelete(item.id)}>
+                  <Text>Eliminar Post</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        )}
       </View>
-      
     );
   }
+  
 }
 const styles = StyleSheet.create({
   container: {
@@ -85,16 +109,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F9FC",
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#333",
+    fontSize: 24,
+        fontWeight: "bold",
+        color: "#1DA1F2",
+        marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 10,
     color: "#666",
-   
+
   },
   logoutButton: {
     backgroundColor: "#D9534F",
@@ -102,11 +126,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 10,
     width: 150,
-    
+
   },
-  
+
   logoutText: {
     color: "white",
     fontWeight: "bold",
@@ -117,7 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1DA1F2",
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
   },
   postContainer: {
     backgroundColor: "#ffffff",
