@@ -2,10 +2,10 @@ import React from "react";
 import { View } from "react-native";
 import NewPost from "../components/NewPost";
 
-export default function NuevoPost(){
+export default function NuevoPost({navigation}){
   return(
     <View>
-      <NewPost/>
+      <NewPost navigation={navigation}/>
     </View>
   )
 }
