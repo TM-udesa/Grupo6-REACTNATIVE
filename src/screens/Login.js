@@ -17,7 +17,11 @@ export default class Register extends Component {
   }
 
   componentDidMount() {
-
+    auth.onAuthStateChanged(user => {
+      if(user && !this.state.registered){
+        this.props.navigation.navigate("homeMenu")
+      }
+    })
   }
 
   onSubmit() {

@@ -23,7 +23,7 @@ export default class NewPost extends Component {
     })
     .then(() => {
       console.log('Post agregado exitosamente');
-      this.props.navigation.navigate('home');
+      this.props.navigation.navigate('Home');
     })
     .catch(error => {
       this.setState({ errorMessage: error.message });
