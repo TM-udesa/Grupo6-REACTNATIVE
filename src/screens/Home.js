@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native-web';
 import { auth, db } from '../firebase/config';
-//falta importar post
+import Posts from "../components/Post"
 
 export default class Home extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class Home extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     db.collection("posts").onSnapshot(
       docs => {
         let posts = []
@@ -33,13 +33,7 @@ export default class Home extends Component {
     return (
       <View>
         <Text>Bienvenido</Text>
-        <FlatList
-        data={this.state.posts}
-        keyExtractor={(item) => item.id}
-        // renderItem={({item}) => (
-        //   <Post item = {item} />
-        // )}
-         />
+        <Posts />
       </View>
     );
   }

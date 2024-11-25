@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { auth, db } from "../firebase/config";
 
+
 export default class NewPost extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       posts: [],
       message: "",
@@ -22,7 +23,7 @@ export default class NewPost extends Component {
     })
     .then(() => {
       console.log('Post agregado exitosamente');
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('home');
     })
     .catch(error => {
       this.setState({ errorMessage: error.message });

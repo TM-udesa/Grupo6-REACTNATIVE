@@ -29,7 +29,7 @@ export default class Register extends Component {
       isValid = false;
     }
     if (!userName) {
-      errors.userName = "El campo nombre de usuario está vacío.";
+      errors.userName = "El campo username de usuario está vacío.";
       isValid = false;
     }
     if (!password) {
@@ -76,6 +76,7 @@ export default class Register extends Component {
   } 
 
   render() {
+    const datos = this.state.email !== "" && this.state.userName !== "" && this.state.password !== "";
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Registro</Text>
@@ -107,7 +108,11 @@ export default class Register extends Component {
           value={this.state.password}
         />
         {this.state.errors.password === "" ? null : <Text style={styles.error}>{this.state.errors.password}</Text>}
-        <TouchableOpacity style={styles.button} onPress={() => this.onSubmit()}>
+        <TouchableOpacity onPress={() => this.onSubmit()}
+          style={[styles.button,
+          { backgroundColor: datos ? '#1DA1F2' : '#CCCCCC' }
+          ]}
+          disabled={!datos}>
           <Text style={styles.buttonText}> Registrarme </Text>
         </TouchableOpacity>
 
