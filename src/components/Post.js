@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { db, firebase, auth } from "../firebase/config";
-
+import { db, auth} from "../firebase/config";
+import firebase from "firebase";
 
 export default class Post extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class Post extends Component {
     this.state = {
       liked: Array.isArray(this.props.postData.likes) 
         ? this.props.postData.likes.includes(auth.currentUser.email) 
-        : false, // Si no es un array, asumimos que no está "liked"
+        : false, 
     };
   }
 
