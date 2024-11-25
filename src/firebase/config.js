@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import firebase from 'firebase';
+import 'firebase/firestore';
 const firebaseConfig = {
     apiKey: "AIzaSyBk5D8CUQu_-bNxaz1DiwkvwhEYaKWMDJ0",
     authDomain: "grupo6-reactnative.firebaseapp.com",
