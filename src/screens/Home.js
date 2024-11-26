@@ -34,6 +34,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Bienvenido</Text>
+        <Text style={styles.subtitle}>Estás en el Home</Text>
         <FlatList
           data={this.state.posteos}
           keyExtractor={(item) => item.id.toString()}
@@ -58,8 +59,14 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: "center",
-    color: "#333",
+    color: "#1DA1F2",
   },
+  subtitle: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 10,
+    textAlign: "center",
+},
 });

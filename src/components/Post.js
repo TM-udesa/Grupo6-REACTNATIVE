@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { db, auth} from "../firebase/config";
+import { db, auth } from "../firebase/config";
 import firebase from "firebase";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      liked: Array.isArray(this.props.postData.likes) 
-        ? this.props.postData.likes.includes(auth.currentUser.email) 
-        : false, 
+      liked: Array.isArray(this.props.postData.likes)
+        ? this.props.postData.likes.includes(auth.currentUser.email)
+        : false,
     };
   }
 
@@ -21,15 +22,15 @@ export default class Post extends Component {
         likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
       })
       .then(() => {
-        
+
         this.setState({ liked: true });
       })
       .catch((error) => console.error("Error al dar like:", error));
   }
-  
+
   unLike() {
     const { postId } = this.props;
-  
+
     db.collection("posts")
       .doc(postId)
       .update({
@@ -40,7 +41,7 @@ export default class Post extends Component {
       })
       .catch((error) => console.error("Error al quitar like:", error));
   }
-  
+
   render() {
     const { postData } = this.props;
     const { liked } = this.state;
@@ -51,13 +52,19 @@ export default class Post extends Component {
       <View style={styles.postContainer}>
         <Text style={styles.email}>{postData.email}</Text>
         <Text style={styles.message}>{postData.posteo}</Text>
-        <Text style={styles.likes}>Likes: {likeCount}</Text>
+        <Text style={styles.likes}>Likes: {likeCount} <Icon name="heart" size={13} color= "red"/></Text>
         <TouchableOpacity
           style={liked ? styles.unlikeButton : styles.likeButton}
           onPress={() => (liked ? this.unLike() : this.like())}
         >
+
           <Text style={liked ? styles.unlikeText : styles.likeText}>
-            {liked ? "Unlike" : "Like"}
+            {liked ? "Unlike" : "Like"}  
+            <Icon
+              name="heart"
+              size={16}
+              color={liked ? "black" : "red"}
+            />
           </Text>
         </TouchableOpacity>
       </View>
@@ -92,12 +99,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
     padding: 10,
     borderRadius: 5,
+    width: 160
   },
   unlikeButton: {
     marginTop: 10,
     backgroundColor: "#dc3545",
     padding: 10,
     borderRadius: 5,
+    width: 160
   },
   likeText: {
     color: "#ffffff",

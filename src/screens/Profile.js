@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
 import { auth, db } from "../firebase/config";
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Profile extends Component {
   constructor() {
     super();
@@ -24,8 +25,10 @@ export default class Profile extends Component {
             data: doc.data(),
           });
         });
+        const userName =usuario[0].data.userName;
         this.setState({
           usuario: usuario,
+          userName:userName,
           loading: false,
         });
       });
@@ -61,14 +64,14 @@ export default class Profile extends Component {
       })
   }
   render() {
-    const { posts } = this.state;
+    const { posts, userName } = this.state;
   
     const sinPosteos = posts.length == 0;
   
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Tu Perfil</Text>
-        <Text style={styles.subtitle}>Bienvenido</Text>
+        <Text style={styles.title}>Tu Perfil <Icon name="user" size={24} color="#1DA1F2" /></Text>
+        <Text style={styles.subtitle}>Bienvenido {userName}</Text>
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={() => this.handleLogOut()}
